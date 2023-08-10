@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add this CSS inside your <style> tag or CSS file */
+
+/* Form container styles */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 3px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Input label styles */
+  x-input-label {
+    font-weight: bold;
+  }
+  
+  /* Text input styles */
+  x-text-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Input error styles */
+  .x-input-error {
+    color: red;
+  }
+  
+  /* Remember me checkbox styles */
+  input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    position: relative;
+  }
+  
+  /* Checked state for remember me checkbox */
+  input[type="checkbox"]:checked {
+    background-color: #3f83f8;
+    border-color: #3f83f8;
+  }
+  
+  
+  /* Checked state for remember me checkbox custom indicator */
+  input[type="checkbox"]:checked::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* Submit button styles */
+  x-primary-button {
+    padding: 10px 20px;
+    background-color: #3f83f8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover state for submit button */
+  x-primary-button:hover {
+    background-color: #3066c9;
+  }
+  
+  /* Keyframes animations for input fields */
+  @keyframes inputFocus {
+    0% {
+      transform: scale(1);
+      border-color: #ccc;
+    }
+    50% {
+      transform: scale(1.05);
+      border-color: #3f83f8;
+    }
+    100% {
+      transform: scale(1);
+      border-color: #ccc;
+    }
+  }
+  
+  /* Apply the animation to the focused text input */
+  x-text-input:focus {
+    animation: inputFocus 1s ease;
+  }
+  
+  /* Keyframes animations for submit button */
+  @keyframes buttonShake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+      transform: translateX(5px);
+    }
+  }
+  
+  /* Apply the animation to the submit button on click */
+  x-primary-button:active {
+    animation: buttonShake 0.4s ease;
+  }
+
