@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nameProd');
             $table->string('imageProd');
             $table->decimal('prixProd', 8, 2);
-            $table->integer('stockProd');
             $table->string('transport');
             $table->date('delaiCloture');
             $table->text('details');

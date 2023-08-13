@@ -46,6 +46,7 @@ class ProductController extends Controller
         try
         {
             $image = $request->file('imageProd');
+
             $filename = uniqid().'.'.$image->getClientOriginalExtension();
             $imagePath = $image->storeAs($directory, $filename );
 
@@ -53,7 +54,6 @@ class ProductController extends Controller
                 'nameProd' => $request->input('nameProd'),
                 'imageProd' => $filename,
                 'prixProd' => $request->input('prixProd'),
-                'stockProd' => $request->input('stockProd'),
                 'transport' => $request->input('transport'),
                 'delaiCloture' => $request->input('delaiCloture'),
                 'details' => $request->input('details'),
@@ -99,21 +99,35 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, Product $product)
-    {
-        $product->update([
-            'nameProd' => $request->input('nameProd'),
-            'imageProd' => $request->input('imageProd'),
-            'prixProd' => $request->input('prixProd'),
-            'stockProd' => $request->input('stockProd'),
-            'transport' => $request->input('transport'),
-            'delaiCloture' => $request->input('delaiCloture'),
-            'details' => $request->input('details'),
-        ]);
 
-        return redirect()->route('products.index')->with('success', 'Le produit a été mis à jour avec succès !');
+     public function update(ProductRequest $request, Product $product)
+     {
 
-    }
+        if($request->id && $request->quantity){
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->put('cart', $cart);
+            session()->flash('success', 'Cart successfully updated!');
+        }
+
+        $directory = 'public/images';
+        $image = $request->file('imageProd');
+        $filename = uniqid().'.'.$image->getClientOriginalExtension();
+        $imagePath = $image->storeAs($directory, $filename );
+        
+
+         $product->update([
+             'nameProd' => $request->input('nameProd'),
+             'imageProd' => $filename,
+             'prixProd' => $request->input('prixProd'),
+             'transport' => $request->input('transport'),
+             'delaiCloture' => $request->input('delaiCloture'),
+             'details' => $request->input('details'),
+         ]);
+ 
+         return redirect()->route('products.index')->with('success', 'Le produit a été mis à jour avec succès !');
+ 
+     }
   
     /**
      * Remove the specified resource from storage.
@@ -123,9 +137,61 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+
         $product->delete();
      
         return redirect()->route('products.index')
                         ->with('success','Le produit a été supprimé avec succès');
+    }
+
+    public function cart()
+    {
+        return view('products.cart');
+    }
+
+    public function addToCart($id)
+    {
+        $product = Product::findOrFail($id);
+  
+        $cart = session()->get('cart', []);
+  
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        }  else {
+            $cart[$id] = [
+                "nameProd" => $product->nameProd,
+                "imageProd" => $product->imageProd,
+                "prixProd" => $product->prixProd,
+                "transport" => $product->transport,
+                "delaiCloture" => $product->delaiCloture,
+                "details" => $product->details,
+                "quantity" => 1
+            ];
+        }
+  
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product add to cart successfully!');
+    }
+
+    public function remove(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'Product successfully removed!');
+        }
+    }
+
+    public function updateCart(Request $request)
+    {
+        if($request->id && $request->quantity){
+            $cart = session()->get('cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->put('cart', $cart);
+            session()->flash('success', 'Cart successfully updated!');
+        }
     }
 }

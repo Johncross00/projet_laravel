@@ -1,65 +1,96 @@
-<x-guest-layout>
+@extends('welcome')
+
+@section('content')
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Modifier un produit</h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('products.index') }}">Retour</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Statut de la session -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('articleUpdate', $article->id) }}">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Oups !</strong> Il y a eu des problèmes avec votre saisie.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('products.update', $product->idProd) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        <!-- Nom du produit -->
         <div>
-            <x-input-label for="nameProd" :value="__('Nom du produit')" />
-            <x-text-input id="nameProd" class="block mt-1 w-full" type="text" name="nameProd" :value="old('nameProd', $article->nameProd)" required autofocus />
-            <x-input-error :messages="$errors->get('nameProd')" class="mt-2" />
+            <strong>Nom du produit :</strong>
+            <input type="text" name="nameProd" class="form-control" placeholder="Nom du produit"
+                value="{{ $product->nameProd }}" required autofocus />
+            @error('nameProd')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Image du produit -->
         <div class="mt-4">
-            <x-input-label for="imageProd" :value="__('Image du produit')" />
-            <x-file-input id="imageProd" class="block mt-1 w-full" type="file" name="imageProd" :value="old('imageProd')" accept=".jpeg,.png,.jpg,.gif,.svg" />
-            <x-input-error :messages="$errors->get('imageProd')" class="mt-2" />
+            <strong>Image du produit :</strong>
+            <input type="file" name="imageProd" class="form-control"  accept=".jpeg,.png,.jpg,.gif,.svg" />
+            <img src="{{ asset('storage/images/' . $product->imageProd) }}" alt="{{ $product->nameProd }}"
+                width="200px" class="mt-2">
+            @error('imageProd')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Prix du produit -->
         <div class="mt-4">
-            <x-input-label for="prixProd" :value="__('Prix du produit')" />
-            <x-text-input id="prixProd" class="block mt-1 w-full" type="text" name="prixProd" :value="old('prixProd', $article->prixProd)" required />
-            <x-input-error :messages="$errors->get('prixProd')" class="mt-2" />
+            <strong>Prix du produit :</strong>
+            <input type="number" name="prixProd" class="form-control" placeholder="Prix du produit"
+                value="{{ $product->prixProd }}" min="0" required />
+            @error('prixProd')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Stock du produit -->
         <div class="mt-4">
-            <x-input-label for="stockProd" :value="__('Stock du produit')" />
-            <x-text-input id="stockProd" class="block mt-1 w-full" type="text" name="stockProd" :value="old('stockProd', $article->stockProd)" required />
-            <x-input-error :messages="$errors->get('stockProd')" class="mt-2" />
+            <strong>Transport :</strong>
+            <select name="transport" class="form-control" required>
+                <option value="Avion" {{ $product->transport === 'Avion' ? 'selected' : '' }}>Avion</option>
+                <option value="Bateau" {{ $product->transport === 'Bateau' ? 'selected' : '' }}>Bateau</option>
+            </select>
+            @error('transport')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Transport -->
         <div class="mt-4">
-            <x-input-label for="transport" :value="__('Transport')" />
-            <x-text-input id="transport" class="block mt-1 w-full" type="text" name="transport" :value="old('transport', $article->transport)" required />
-            <x-input-error :messages="$errors->get('transport')" class="mt-2" />
+            <strong>Délai de clôture :</strong>
+            <input type="date" name="delaiCloture" class="form-control" placeholder="Délai de clôture"
+                value="{{ $product->delaiCloture }}" required />
+            @error('delaiCloture')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Délai de clôture -->
         <div class="mt-4">
-            <x-input-label for="délaiClotûre" :value="__('Délai de clôture')" />
-            <x-text-input id="délaiClotûre" class="block mt-1 w-full" type="text" name="délaiClotûre" :value="old('délaiClotûre', $article->délaiClotûre)" required />
-            <x-input-error :messages="$errors->get('délaiClotûre')" class="mt-2" />
+            <strong>Détails :</strong>
+            <textarea name="details" class="form-control"
+                rows="4">{{ $product->details }}</textarea>
+            @error('details')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Détails -->
-        <div class="mt-4">
-            <x-input-label for="détails" :value="__('Détails')" />
-            <x-text-input id="détails" class="block mt-1 w-full" type="text" name="détails" :value="old('détails', $article->détails)" />
-            <x-input-error :messages="$errors->get('détails')" class="mt-2" />
+        <div class="flex items-center justify-between mt-4">
+            <button type="reset" class="btn btn-secondary">Annuler</button>
+            <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
 
-        <!-- Clôture du délai -->
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ml-3">
-                {{ __('Mettre à jour') }}
-            </x-primary-button>
-        </div>
     </form>
-</x-guest-layout>
+@endsection

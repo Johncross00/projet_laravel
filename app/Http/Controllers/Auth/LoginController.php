@@ -31,14 +31,25 @@ class LoginController extends Controller
         ])->validate();
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if (auth()->usertype()->admin == 1) {
+            if (auth()->user()->usertype == 'admin') 
+            {
                 return redirect()->route('admin.home');
-            } else {
+            }
+
+             elseif (auth()->user()->usertype == 'editor')
+             {
+                return redirect()->route('editor.home');
+            }
+
+            else 
+            {
                 return redirect()->route('home');
             }
+
         } else {
             throw ValidationException::withMessages([
-                'email' => 'Input propere email/password.'
+                'email' => 'Email incorrect.',
+                'password' => 'Mot de passe incorrect.'
             ]);
         }
     }

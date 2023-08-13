@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->boolean('is_admin')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');
             $table->string('address');
-            $table->string('usertype')->default('user');
-            $table->rememberToken();
+            $table->enum('usertype', ['user', 'admin', 'editor'])->default('user');            $table->rememberToken();
             $table->timestamps();
         });
     }

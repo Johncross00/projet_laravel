@@ -41,7 +41,9 @@
         <div class="mt-4">
             <strong>Image du produit :</strong>
             <input type="file" name="imageProd" class="form-control" placeholder="Image du produit"
-                value="{{ old('imageProd') }}" accept=".jpeg,.png,.jpg,.gif,.svg" required />
+            value="{{ old('imageProd') }}" accept=".jpeg,.png,.jpg,.gif,.svg" required />
+            <img src="{{ asset('storage/images/' . $product->imageProd) }}" alt="{{ $product->nameProd }}"
+
             @error('imageProd')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -52,15 +54,6 @@
             <input type="number" name="prixProd" class="form-control" placeholder="Prix du produit"
                 value="{{ old('prixProd') }}" min="0" required />
             @error('prixProd')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mt-4">
-            <strong>Stock du produit :</strong>
-            <input type="number" name="stockProd" class="form-control" placeholder="Stock du produit"
-                value="{{ old('stockProd') }}" min="0" required />
-            @error('stockProd')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>

@@ -37,6 +37,11 @@ class HomeController extends Controller
             {
                 return view('admin.adminhome');
             }
+
+            else if($usertype=='editor')
+            {
+                return view('editor.editorhome');
+            }
             
             else
             {
