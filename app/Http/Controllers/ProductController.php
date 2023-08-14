@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('editor.editorhome');
     }
     
     /**
