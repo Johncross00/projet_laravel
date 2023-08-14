@@ -1,5 +1,5 @@
 {{-- Pour le client --}}
- {{-- @extends('welcome')
+ @extends('welcome')
 
  @section('content')
 
@@ -46,4 +46,4 @@
     </div>
 </div>
  
-@endsection --}}
+@endsection
