@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Commande;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -18,6 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->paginate(10);
+        
     
         return view('products.index',compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -30,7 +32,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('editor.editorhome');
+        $product = new Product(); // Crée une instance vide de Product
+        return view('products.create', compact('product'));
     }
     
     /**
@@ -62,7 +65,7 @@ class ProductController extends Controller
             // $product->imageProd = $image;
             $product->save();
 
-            return redirect()->route('products.index')->with('success', 'Le produit a été créé avec succès !');
+            return redirect()->route('editor.home')->with('success', 'Le produit a été créé avec succès !');
         } 
         catch (FileException $e)
         {
@@ -107,7 +110,7 @@ class ProductController extends Controller
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
-            session()->flash('success', 'Cart successfully updated!');
+            session()->flash('success', 'Le panier a été mis à jour!');
         }
 
         $directory = 'public/images';
@@ -125,7 +128,7 @@ class ProductController extends Controller
              'details' => $request->input('details'),
          ]);
  
-         return redirect()->route('products.index')->with('success', 'Le produit a été mis à jour avec succès !');
+         return redirect()->route('editor.home')->with('success', 'Le produit a été mis à jour !');
  
      }
   
@@ -140,7 +143,7 @@ class ProductController extends Controller
 
         $product->delete();
      
-        return redirect()->route('products.index')
+        return redirect()->route('editor.home')
                         ->with('success','Le produit a été supprimé avec succès');
     }
 
@@ -170,7 +173,7 @@ class ProductController extends Controller
         }
   
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product add to cart successfully!');
+        return redirect()->back()->with('success', 'Le produit a été ajouté au panier!');
     }
 
     public function remove(Request $request)
@@ -181,9 +184,10 @@ class ProductController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            session()->flash('success', 'Product successfully removed!');
+            session()->flash('success', 'Produit supprimé!');
         }
     }
+    
 
     public function updateCart(Request $request)
     {
@@ -191,7 +195,34 @@ class ProductController extends Controller
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
-            session()->flash('success', 'Cart successfully updated!');
+            session()->flash('success', 'Le panier a été mis à jour!');
         }
     }
+
+    public function searchProducts(Request $request)
+    {
+        $searchQuery = $request->input('search'); // Get the search query from the request
+
+        // Perform the search and get the results using your search logic
+        $searchResults = Product::where('nameProd', 'like', '%' . $searchQuery . '%')
+                                ->paginate(10);
+
+        // Pass the search results to the view along with the $products variable
+        return view('products.index', ['products' => $searchResults]);
+    }
+
+    public function orderHistory()
+    {
+        $user = auth()->user();
+        $orders = Commande::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->with('product') // Charger la relation 'product'
+        ->get();
+        return view('products.orderhistory', compact('orders'));
+    }
+
+
+
+
+
 }

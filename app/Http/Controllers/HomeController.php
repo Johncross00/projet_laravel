@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 class HomeController extends Controller
 {
     /**
@@ -30,17 +32,19 @@ class HomeController extends Controller
 
             if($usertype=='user')
             {
-                return view('dashboard');
-            }
+                $products = Product::latest()->paginate(10);
+    
+                return view('products.index',compact('products'))
+                    ->with('i', (request()->input('page', 1) - 1) * 5);            }
 
             else if($usertype=='admin')
             {
-                return view('admin.adminhome');
+                return view('welcome');
             }
 
             else if($usertype=='editor')
-            {
-                return view('editor.editorhome');
+            {  $products = Product::paginate(10);
+                return view('editor.editorhome', ['products' => $products]);
             }
             
             else
@@ -53,8 +57,5 @@ class HomeController extends Controller
     // public function adminHome(){
     //     return view('admin-home');
     // }
-    public function post()
-    {
-        return view('post');
-    }
+    
 }

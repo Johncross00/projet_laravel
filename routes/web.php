@@ -21,9 +21,11 @@ use App\Http\Controllers\StripeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+
 
 Route::resource('products', ProductController::class);
 
@@ -59,9 +61,20 @@ require __DIR__.'/auth.php';
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('admin');
-Route::get('/editor', [App\Http\Controllers\HomeController::class, 'index'])->name('editor.home')->middleware('editor');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('admin');
+    Route::get('/editor', [App\Http\Controllers\HomeController::class, 'index'])->name('editor.home')->middleware('editor');
+    Route::get('/success', [StripeController::class, 'success'])->name('success');
+    Route::get('/order-history', [ProductController::class, 'orderHistory'])->name('order-history');
+
+    
+});
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('admin');
+// Route::get('/editor', [App\Http\Controllers\HomeController::class, 'index'])->name('editor.home')->middleware('editor');
+Route::get('/search', [App\Http\Controllers\ProductController::class, 'searchProducts'])->name('searchProducts');
 
 
 Route::post('/session', [StripeController::class, 'session'])->name('session');

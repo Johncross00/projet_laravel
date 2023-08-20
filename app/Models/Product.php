@@ -19,4 +19,9 @@ class Product extends Model
         'delaiCloture',
         'details'
     ];
+
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
 }

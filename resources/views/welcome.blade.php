@@ -41,7 +41,7 @@
         }
 
         .app-content {
-            background-color: #0b742571;
+            background-color: #77f597da
         }
 
         .app-footer {
@@ -109,7 +109,7 @@
     </div>
 
     <br />
-    <div class="container">
+    {{-- <div class="container">
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -118,7 +118,7 @@
         @endif
 
         @yield('content')
-    </div>
+    </div> --}}
 
     @yield('scripts')
     <header class="app-header fixed-top">
@@ -126,6 +126,10 @@
         @include('layouts.topbar')
 
         @include('layouts.sidebar')
+        @yield('content')
+
+
+        
     </header><!--//app-header-->
 
     <div class="app-wrapper">
@@ -133,7 +137,6 @@
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container-xl">
                 @include('layouts.dashboard')
-                @yield('content')
 
 
             </div><!--//app-content-->
