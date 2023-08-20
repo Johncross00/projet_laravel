@@ -140,11 +140,16 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Vérification des dépendances dans la table "commandes"
+        $existingOrders = Commande::where('product_id', $product->idProd)->count();
+
+        if ($existingOrders > 0) {
+            return redirect()->route('editor.home')->with('error', 'Ce produit ne peut pas être supprimé car des commandes en cours y sont liées.');
+        }
 
         $product->delete();
-     
-        return redirect()->route('editor.home')
-                        ->with('success','Le produit a été supprimé avec succès');
+
+        return redirect()->route('editor.home')->with('success', 'Le produit a été supprimé avec succès.');
     }
 
     public function cart()

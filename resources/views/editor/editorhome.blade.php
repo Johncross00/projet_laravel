@@ -51,25 +51,44 @@
         /* Styles for dark theme */
         body{
             /* background-color: rgba(135, 189, 142, 0.897); */
-            background-color: rgba(0,0,0,0.5);
+            background-image: url('/images/6148228_3163920.jpg');
             color: white;
         }
+        .btn-success {
+            background-color: seagreen;
+            border-color: #77f597;
+            color: black; /* Changer la couleur du texte en blanc */
+        }
+        .btn-success:hover {
+        background-color: #68d88c;
+        border-color: #68d88c;
+        color: white;
+        }
+        .table td,
+        .table th {
+            border-color: #1c1f29;
+        }
+
         .app-card {
             background-color: #a5f1af;
             border-color: #000000;
-            border-width: 4px;
+            border-width: 1px;
             border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,1) /* Change this color for the table cell background */
+            box-shadow: 0 5px 15px rgba(0,0,0,1);
+            height: 80px; 
+            padding: 1px;/* Change this color for the table cell background */
         }
         .table {
             /* background: rgba(0,0,0,0.5) #4f5569; */
             background-color: rgb(240, 240, 240, 0.5);
+            backdrop-filter: blur(30px);
             color: white;
 
         }
+        
         .table td {
-            background-color: rgba(80, 100, 83, 0.062);
-            color: rgb(0, 0, 0); */
+            background-color: rgba(80, 100, 83, 0.2);
+            color: #fff;
         }
 
         @keyframes animated
@@ -112,6 +131,35 @@
         .btn-close {
             color: white;
         }
+        .table {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .table td {
+            background-color: rgba(80, 100, 83, 0.062);
+            color: white;
+        }
+
+        .table th {
+            background-color: #13c44e;
+            color: white;
+        }
+
+        .table td,
+        .table th {
+            border-color: #1c1f29;
+        }
+
+        .btn-success {
+            background-color: #77f597;
+            border-color: #77f597;
+        }
+
+        .btn-success:hover {
+            background-color: #68d88c;
+            border-color: #68d88c;
+        }
         
         /* Add more styles as needed for other elements */
     </style>
@@ -141,9 +189,14 @@
                     <p>{{ $message }}</p>
                 </div>
             @endif
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
             <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
                 <div class="inner">
-                    <div class="app-card-body p-3 p-lg-4">
+                    <div class="app-card-body p-2 py-1 p-lg-4">
                         <center>
                         <h1 >Page de l'Editeur</h1>
                         </center><div class="row gx-5 gy-3">

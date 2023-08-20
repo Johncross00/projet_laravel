@@ -1,3 +1,8 @@
+<style>
+	.app-header-inner {
+		background: rgba(255, 255, 255, 0.3);
+	}
+</style>
 <div class="app-header-inner">  
 	        <div class="container-fluid py-2">
 		        <div class="app-header-content"> 

@@ -97,15 +97,14 @@ body {
     margin: 2px;
     padding: 1px;
     font-size: 11px;
+    color: #ffffff9f;
 }
  .card-title {
     font-size: 25px;
     margin: 1px;
     padding: 1px;
 }
-.card-text {
-    color: #777;
-}
+
 @media (max-width: 768px) {
     .card-container {
         margin-top: 10px;

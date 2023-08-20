@@ -31,7 +31,8 @@
     <style>
         /* Styles for dark theme */
         body.app {
-            background-color: rgba(0,0,0,0.5);
+            background-image: url('/images/Get the We Heart It app!.jpeg');
+            background-attachment: fixed;
             color: #ffffff;
         }
 
@@ -40,21 +41,81 @@
             color: #ffffff;
         }
 
-        .app-content {
+        /* .app-content {
             background-color: #77f597da
-        }
+        } */
 
         .app-footer {
+            height: auto;
+            background-color: #333;
             color: #ffff;
+            position: static;
+            bottom: 0;
+            width: 100%;
         }
 
         footer {
             display: flex;
             justify-content: space-between;
+            width: 100%;
+
+
         }
 
-        footer div {
+        /* footer div {
             width: 100%;
+        } */
+
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 20px auto;
+        }
+
+        .card {
+            /* width: calc(33.33% - 20px); */
+            height: auto;
+            background: rgba(19, 46, 21, 0.5);
+            border: 2px solid rgb(0, 252, 13);
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            max-width: 100%;
+            max-height: auto;
+            border-radius: 10px;
+        }
+
+        .card h5 {
+            font-size: 23px;
+            margin-bottom: -10px;
+            padding: 5px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .card .btn {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            /* Couleur de texte en blanc */
+        }
+
+        /* Changer la couleur du texte des boutons dans la dropdown */
+        .dropdown-menu .btn-primary {
+            color: #000;
+            /* Couleur de texte en noir */
         }
 
         /* Add more styles as needed for other elements */
@@ -88,7 +149,8 @@
                                 @foreach (session('cart') as $id => $details)
                                     <div class="row cart-detail">
                                         <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                            <img src="{{ asset('storage/images/') }}/{{ $details['imageProd'] }}" />                                        </div>
+                                            <img src="{{ asset('storage/images/') }}/{{ $details['imageProd'] }}" />
+                                        </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ $details['nameProd'] }}</p>
                                             <span class="price text-success">{{ $details['prixProd'] }} XOF</span> <span
@@ -97,7 +159,7 @@
                                     </div>
                                 @endforeach
                             @endif
-                            
+
                             @if (session('cart') && count(session('cart')) > 0)
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
@@ -110,19 +172,20 @@
                     </div>
                 @else
                     <div id="error-message" class="alert alert-danger" style="display: none;">
-                        Vous devez être connecté pour accéder à votre panier. <a href="{{ route('login') }}">Se connecter</a>
+                        Vous devez être connecté pour accéder à votre panier. <a href="{{ route('login') }}">Se
+                            connecter</a>
                     </div>
-                    
+
                     <script>
                         // ... Votre code JavaScript existant ...
-                    
+
                         // Ajoutez cette partie pour afficher le message si l'utilisateur n'est pas connecté
                         @guest
                         $(document).ready(function() {
                             $("#error-message").show();
                         });
                         @endguest
-                    </script>                
+                    </script>
                 @endauth
 
 
@@ -130,34 +193,35 @@
         </div>
     </div>
 
-    
+
 
     @yield('scripts')
     <header class="app-header fixed-top">
         <!--//app-header-inner-->
         @include('layouts.topbar')
-        
+
     </header><!--//app-header-->
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            
+
         </div>
     </div>
-    
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-    
-    
+
+
 
     <div class="row">
-        @foreach($products as $product)
+        @foreach ($products as $product)
             <div class="col-xs-12 col-sm-6 col-md-3" style="margin-top: 10px;">
                 <div class="card">
-                    <img src="{{ URL::asset("storage/images/" . $product->imageProd) }}" class="card-img-top" alt="{{ $product->nameProd }}">
+                    <img src="{{ URL::asset('storage/images/' . $product->imageProd) }}" class="card-img-top"
+                        alt="{{ $product->nameProd }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->nameProd }}</h5>
                         <h5 class="card-title">{{ $product->prixProd }} XOF</h5>
@@ -165,66 +229,56 @@
                         <p class="card-text"><strong>Délai Clôture: </strong> {{ $product->delaiCloture }}</p>
                         <p class="card-text">{{ $product->details }}</p>
                         <div class="text-center">
-                            <a href="{{ route('add_to_cart', $product->idProd) }}" class="btn btn-primary">Ajouter au panier</a>
+                            <a href="{{ route('add_to_cart', $product->idProd) }}" class="btn btn-primary">Ajouter au
+                                panier</a>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-    
+
     <div class="row">
         <div class="col-lg-12">
             {!! $products->links() !!}
         </div>
     </div>
 
-
-
-    <div class="app-wrapper">
-
-        <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container-xl">
-
-
-            </div><!--//app-content-->
-
-            <footer class="app-footer mt-1 border-t border-gray-900 text-center">
+            <footer class="app-footer border-t text-center">
                 <div class="container mx-auto flex flex-wrap justify-between">
-                    <div class="w-full md:w-1/3 mb-4 md:mb-0">
-                        <h4 class="text-xl font-semibold mb-4">Faites vos commandes groupées</h4>
+                    <div class="w-full md:w-1/3">
+                        <p class="text-gray-300 mb-2">Abonnez-vous à notre newsletter pour les dernières mises à jour.
+                        </p>
+                        <form class="flex">
+                            <input type="email"
+                                class="bg-gray-700 py-2 px-4 rounded-l-md focus:outline-none focus:ring focus:border-blue-500"
+                                placeholder="Votre e-mail">
+                            <button type="submit"
+                                class="bg-blue-500 text-black py-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">S'abonner</button>
+                        </form>
+                        <p class="text-gray-300 mt-8">© 2023 Tous droits réservés. Mentions légales | Politique de
+                            confidentialité</p>
                     </div>
                 </div>
-                <div class="w-full md:w-1/3">
-                    <p class="text-gray-300 mb-2">Abonnez-vous à notre newsletter pour les dernières mises à jour.</p>
-                    <form class="flex">
-                        <input type="email"
-                            class="bg-gray-700 py-2 px-4 rounded-l-md focus:outline-none focus:ring focus:border-blue-500"
-                            placeholder="Votre e-mail">
-                        <button type="submit"
-                            class="bg-blue-500 text-black py-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">S'abonner</button>
-                    </form>
-                </div>
-        </div>
-        <div class="app-footer mt-8 border-t border-gray-600 text-center">
-            <p class="text-gray-300">© 2023 Tous droits réservés. Mentions légales | Politique de confidentialité</p>
-        </div>
-        </footer>
-        <!--//app-footer-->
+            </footer>
 
-    </div><!--//app-wrapper-->
 
-    <!-- Javascript -->
-    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
-    <!-- Charts JS -->
-    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
-    <script src="{{ asset('assets/js/index-charts.js') }}"></script>
+            <!--//app-footer-->
 
-    <!-- Page Specific JS -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </div><!--//app-wrapper-->
+
+        <!-- Javascript -->
+        <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <!-- Charts JS -->
+        <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+        <script src="{{ asset('assets/js/index-charts.js') }}"></script>
+
+        <!-- Page Specific JS -->
+        <script src="{{ asset('assets/js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>
@@ -250,7 +304,7 @@
 @endif
 
 <div class="row">
-    @foreach($products as $product)
+    @foreach ($products as $product)
         <div class="col-xs-12 col-sm-6 col-md-3" style="margin-top: 10px;">
             <div class="card">
                 <img src="{{ URL::asset("storage/images/" . $product->imageProd) }}" class="card-img-top" alt="{{ $product->nameProd }}">
