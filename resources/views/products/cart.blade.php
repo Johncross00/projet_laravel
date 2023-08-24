@@ -161,7 +161,10 @@
     <style>
         /* Styles for dark theme */
         body.app {
-            background-color: rgba(0,0,0,0.5);
+            background-image: url('/images/Le-Chai-d039Anthon-Z_ROMAIN-QUINTON_Commande-Groupée_Affiche-présentation2.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
             color: #ffffff;
         }
 
@@ -185,6 +188,37 @@
 
         footer div {
             width: 100%;
+        }
+        .table {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            color: #fff;
+        }
+
+        .table td {
+            background-color: rgba(41, 65, 41, 0.3);
+            color: white;
+        }
+
+        .table th {
+            background-color: #13c44e;
+            color: white;
+        }
+        .table td,
+        .table th {
+            border-color: #fff;
+        }
+        .table td .btn-danger {
+            color: white;
+        }
+        .table td {
+            color: white;
+        }
+        tfoot {
+    color: white;
+        }
+        h1 h2 h3 h4 h5{
+            color: #fff;
         }
 
         /* Add more styles as needed for other elements */
@@ -222,12 +256,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">{{ $details['prixProd'] }} XOF</td>
+                        <td data-th="Price">{{ number_format($details['prixProd'] , 0, '', '')}} FCFA</td>
                         <td data-th="Quantity">
                             <input type="number" value="{{ $details['quantity'] }}"
                                 class="form-control quantity cart_update" min="1" />
                         </td>
-                        <td data-th="Subtotal" class="text-center">{{ $details['prixProd'] * $details['quantity'] }} XOF
+                        <td data-th="Subtotal" class="text-center">{{ $details['prixProd'] * $details['quantity'] }} FCFA
                         </td>
                         <td class="actions" data-th="">
                             <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i>
@@ -240,7 +274,7 @@
         <tfoot>
             <tr>
                 <td colspan="5" style="text-align:right;">
-                    <h3><strong>Total {{ $total }} XOF</strong></h3>
+                    <h3><strong>Total {{ $total }} FCFA</strong></h3>
                 </td>
             </tr>
             <tr>

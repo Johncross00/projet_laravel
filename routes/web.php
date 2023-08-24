@@ -39,6 +39,13 @@ Route::resource('products', ProductController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home.controller');
 
 Route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
+
+Route::get('/admin', [App\Http\Controllers\UserController::class, 'countUsers'])->name('admin.count.users');
+
+
+Route::get('admin/create/user', [App\Http\Controllers\UserController::class, 'createUserForm'])->name('admin.create.user');
+Route::post('admin/store/user', [App\Http\Controllers\UserController::class, 'storeUsers'])->name('admin.store.user');
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -75,6 +82,7 @@ Route::middleware('auth')->group(function () {
 // Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('admin');
 // Route::get('/editor', [App\Http\Controllers\HomeController::class, 'index'])->name('editor.home')->middleware('editor');
 Route::get('/search', [App\Http\Controllers\ProductController::class, 'searchProducts'])->name('searchProducts');
+Route::get('/admin/users', [UserController::class, 'listUsers'])->name('admin.users');
 
 
 Route::post('/session', [StripeController::class, 'session'])->name('session');

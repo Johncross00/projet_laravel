@@ -31,7 +31,7 @@
     <style>
         /* Styles for dark theme */
         body.app {
-            background-color: rgba(0,0,0,0.5);
+            background-image: url('/images/Get the We Heart It app!.jpeg');
             color: #ffffff;
         }
 
@@ -55,6 +55,45 @@
 
         footer div {
             width: 100%;
+        }.card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 20px auto;
+        }
+
+        .card {
+            /* width: calc(33.33% - 20px); */
+            height: auto;
+            background: rgba(19, 46, 21, 0.5);
+            border: 2px solid rgb(0, 252, 13);
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            max-width: 100%;
+            max-height: auto;
+            border-radius: 10px;
+        }
+
+        .card h5 {
+            font-size: 23px;
+            margin-bottom: -10px;
+            padding: 5px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .card .btn {
+            display: block;
+            margin-top: 15px;
         }
 
         /* Add more styles as needed for other elements */
@@ -69,12 +108,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Payement Réussi</div>
+                <h2 class="card-header">Payement Réussi</h2>
 
                 <div class="card-body">
-                    <p>Merci pour votre commandes! Le payement a été bien éffectué</p>
-                    <p>Vous serrez contacté le plus tôt possible.</p>
-                    <button onclick="redirectToHome()">Retourner à la page d'accueil</button>
+                    <h4>Merci pour votre commande! Le payement a été bien éffectué</h4>
+                    <h6>Vous serrez contacté le plus tôt possible.</h6>
+                    <button class="btn btn-primary" onclick="redirectToHome()">Retourner à la page d'accueil</button>
                 </div>
             </div>
         </div>
@@ -92,7 +131,7 @@
         <!--//app-header-inner-->
         @include('layouts.topbar')
         
-    </header><!--//app-header-->
+    </header><!--//app-header-->    
 
     <div class="row">
         <div class="col-lg-12 margin-tb">

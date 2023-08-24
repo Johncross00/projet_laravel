@@ -127,4 +127,48 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
+
+    public function listUsers()
+    {
+        $users = User::all();
+
+        return view('admin.userliste', ['users' => $users]);
+    }
+
+    public function createUserForm()
+    {
+        return view('admin.create_user'); // Vue pour afficher le formulaire de création
+    }
+
+    public function storeUsers(Request $request)
+{
+    $user = new User();
+
+    $user->name = $request->input('name');
+    $user->email = $request->input('email');
+    $user->phone = $request->input('phone');
+    $user->address = $request->input('address');
+    $user->usertype = 'editor';
+
+    // Hash the password before inserting
+    $user->password = Hash::make($request->input('password'));
+
+    try {
+        $user->save();
+        return redirect()->route('admin.userliste')->with('success', 'Utilisateur créé avec succès.');
+    } catch (\Illuminate\Database\QueryException $e) {
+        if ($e->errorInfo[1] == 1062) { // Error code for duplicate entry
+            return redirect()->back()->withInput()->withErrors(['email' => 'L\'adresse e-mail est déjà enregistrée.']);
+        }
+        return redirect()->back()->withInput()->withErrors(['error' => 'Une erreur est survenue lors de la création de l\'utilisateur.']);
+    }
+    }
+
+    public function countUsers()
+    {
+        $userCount = User::count();
+
+        return view('layouts.dashboard', ['userCount' => $userCount]);
+    }
+
 }

@@ -39,11 +39,11 @@ class HomeController extends Controller
 
             else if($usertype=='admin')
             {
-                return view('welcome');
+                return view('admin.adminhome');
             }
 
             else if($usertype=='editor')
-            {  $products = Product::paginate(10);
+            {   $products = Product::orderBy('created_at', 'desc')->get();
                 return view('editor.editorhome', ['products' => $products]);
             }
             

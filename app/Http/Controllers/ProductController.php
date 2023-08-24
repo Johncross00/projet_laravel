@@ -7,6 +7,7 @@ use App\Models\Commande;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
   
 class ProductController extends Controller
@@ -18,11 +19,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(10);
-        
-    
-        return view('products.index',compact('products'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $now = Carbon::now();
+        $products = Product::where('delaiCloture', '>', $now)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+
+        return view('products.index', compact('products'));
     }
    
     /**

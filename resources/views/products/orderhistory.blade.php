@@ -31,8 +31,11 @@
     <style>
         /* Styles for dark theme */
         body.app {
-            background-color: rgba(0,0,0,0.5);
-            color: #ffffff;
+            background-image: url('/images/low-angle-view-two-female-workers-reading-delivery-schedule-list-while-working-distribution-warehouse.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
         }
 
         .app-header {
@@ -56,6 +59,25 @@
         footer div {
             width: 100%;
         }
+        .table {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .table td {
+            background-color: rgba(41, 65, 41, 0.4);
+            color: white;
+        }
+
+        .table th {
+            background-color: #13c44e;
+            color: white;
+        }
+        .table td,
+        .table th {
+            border-color: #1c1f29;
+        }
+
 
         /* Add more styles as needed for other elements */
     </style>
@@ -65,15 +87,15 @@
 <body class="app">
     <div class="container">
         <div id="error-message" class="alert alert-danger" style="display: none;"></div>
-    <div class="container">
-        <div class="container mt-4">
-            <a href="{{ route('home') }}" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Retour</a>
-        </div>
-    
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                
-                {{-- <div class="card"> --}}
+        <div class="container">
+            <div class="container mt-4">
+                <a href="{{ route('home') }}" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Retour</a>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+
+                    {{-- <div class="card"> --}}
                     <div class="header">Historique des commandes</div>
 
                     <div class="body">
@@ -98,7 +120,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $order->quantite }}</td>
-                                        <td>{{ $order->montant_total }} XOF</td>
+                                        <td>{{ number_format($order->montant_total, 0, '', '') }} FCFA</td>
                                     </tr>
                                 @endforeach
 
@@ -114,27 +136,27 @@
     <header class="app-header fixed-top">
         <!--//app-header-inner-->
         @include('layouts.topbar')
-        
+
     </header><!--//app-header-->
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            
+
         </div>
     </div>
-    
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-    
-    
+
+
 
     <div class="row">
-       
+
     </div>
-    
+
 
 
     <!-- Javascript -->

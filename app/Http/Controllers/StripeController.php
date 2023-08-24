@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Commande;
 use App\Models\Product;
+use Illuminate\Support\Facades\Session as LaravelSession;
 use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
+use Stripe\Checkout\Session as StripeSession;
 use Stripe\Stripe;
 
 class StripeController extends Controller
@@ -46,7 +47,7 @@ class StripeController extends Controller
             $quantity = $details['quantity'];
  
             $two0 = "00";
-            $unit_amount = $total * 100;
+            $unit_amount = $total * 1;
             $productItems[] = [
                 'price_data' => [
                     'product_data' => [
@@ -59,7 +60,7 @@ class StripeController extends Controller
             ];
         }
  
-        $checkoutSession = Session::create([
+        $checkoutSession = StripeSession::create([
             'line_items'            => [$productItems],
             'mode'                  => 'payment',
             'allow_promotion_codes' => true,
@@ -94,6 +95,8 @@ class StripeController extends Controller
                 $commande->save(); 
             }
         }
+         // Videz le panier après le paiement réussi
+        LaravelSession::forget('cart');
 
         // Affichez un message de succès
         return view('products.success');

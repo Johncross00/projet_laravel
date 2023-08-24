@@ -142,7 +142,7 @@
                                     @php $total += $details['prixProd'] * $details['quantity'] @endphp
                                 @endforeach
                                 <div class="col-lg-12 col-sm-12 col-12 total-section text-right">
-                                    <p>Total: <span class="text-success">{{ $total }} XOF</span></p>
+                                    <p>Total: <span class="text-success">{{ $total }} FCFA</span></p>
                                 </div>
                             </div>
                             @if (session('cart'))
@@ -153,7 +153,7 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ $details['nameProd'] }}</p>
-                                            <span class="price text-success">{{ $details['prixProd'] }} XOF</span> <span
+                                            <span class="price text-success">{{ $details['prixProd'] }} FCFA</span> <span
                                                 class="count"> Quantité:{{ $details['quantity'] }}</span>
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
                         alt="{{ $product->nameProd }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->nameProd }}</h5>
-                        <h5 class="card-title">{{ $product->prixProd }} XOF</h5>
+                        <h5 class="card-title">{{ number_format($product->prixProd, 0, '', '') }} FCFA</h5>
                         <p class="card-text"><strong>Transport: </strong> {{ $product->transport }}</p>
                         <p class="card-text"><strong>Délai Clôture: </strong> {{ $product->delaiCloture }}</p>
                         <p class="card-text">{{ $product->details }}</p>
@@ -238,47 +238,43 @@
         @endforeach
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            {!! $products->links() !!}
+
+
+    <footer class="app-footer border-t text-center">
+        <div class="container mx-auto flex flex-wrap justify-between">
+            <div class="w-full md:w-1/3">
+                <p class="text-gray-300 mb-2">Abonnez-vous à notre newsletter pour les dernières mises à jour.
+                </p>
+                <form class="flex">
+                    <input type="email"
+                        class="bg-gray-700 py-2 px-4 rounded-l-md focus:outline-none focus:ring focus:border-blue-500"
+                        placeholder="Votre e-mail">
+                    <button type="submit"
+                        class="bg-blue-500 text-black py-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">S'abonner</button>
+                </form>
+                <p class="text-gray-300 mt-8">© 2023 Tous droits réservés. Mentions légales | Politique de
+                    confidentialité</p>
+            </div>
         </div>
-    </div>
-
-            <footer class="app-footer border-t text-center">
-                <div class="container mx-auto flex flex-wrap justify-between">
-                    <div class="w-full md:w-1/3">
-                        <p class="text-gray-300 mb-2">Abonnez-vous à notre newsletter pour les dernières mises à jour.
-                        </p>
-                        <form class="flex">
-                            <input type="email"
-                                class="bg-gray-700 py-2 px-4 rounded-l-md focus:outline-none focus:ring focus:border-blue-500"
-                                placeholder="Votre e-mail">
-                            <button type="submit"
-                                class="bg-blue-500 text-black py-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">S'abonner</button>
-                        </form>
-                        <p class="text-gray-300 mt-8">© 2023 Tous droits réservés. Mentions légales | Politique de
-                            confidentialité</p>
-                    </div>
-                </div>
-            </footer>
+    </footer>
 
 
 
-            <!--//app-footer-->
+    <!--//app-footer-->
 
-        </div><!--//app-wrapper-->
+    </div><!--//app-wrapper-->
 
-        <!-- Javascript -->
-        <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- Javascript -->
+    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
-        <!-- Charts JS -->
-        <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
-        <script src="{{ asset('assets/js/index-charts.js') }}"></script>
+    <!-- Charts JS -->
+    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+    <script src="{{ asset('assets/js/index-charts.js') }}"></script>
 
-        <!-- Page Specific JS -->
-        <script src="{{ asset('assets/js/app.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Page Specific JS -->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>

@@ -1,10 +1,10 @@
 
-<h1 class="app-page-title">Admin Dashboard</h1>
+<h1 class="app-page-title">Dashboard Administrateur</h1>
 			    
 			    <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
 				    <div class="inner">
 					    <div class="app-card-body p-3 p-lg-4">
-						    <h3 class="mb-3">Welcome Admin</h3>
+						    <h3 class="mb-3">Admin</h3>
 						    <div class="row gx-5 gy-3">
 						        <div class="col-12 col-lg-9">
 							        
@@ -63,7 +63,7 @@
 							    <h4 class="stats-type mb-1">Prix Total</h4>
 							    <div class="stats-figure">50000</div>
 								<div class="stats-meta">
-								    XOF</div>
+								    FCFA</div>
 						    </div><!--//app-card-body-->
 						    <a class="app-card-link-mask" href="#"></a>
 					    </div><!--//app-card-->
